@@ -69,7 +69,6 @@ window.addEventListener("scroll", function () {
   } else {
     header.classList.remove("active");
     backTopBtn.classList.remove("active");
-
   }
 });
 
@@ -77,7 +76,7 @@ window.addEventListener("scroll", function () {
  * HERO SLIDER
  */
 
-const heroSlider  = document.querySelector("[data-hero-slider]");
+const heroSlider = document.querySelector("[data-hero-slider]");
 const heroSliderItems = document.querySelectorAll("[data-hero-slider-item]");
 const heroSliderPrevBtn = document.querySelector("[data-prev-btn]");
 const heroSliderNextBtn = document.querySelector("[data-next-btn]");
@@ -89,7 +88,7 @@ const updateSliderPos = function () {
   lastActiveSliderItem.classList.remove("active");
   heroSliderItems[currentSlidePos].classList.add("active");
   lastActiveSliderItem = heroSliderItems[currentSlidePos];
-}
+};
 
 const slideNext = function () {
   if (currentSlidePos >= heroSliderItems.length - 1) {
@@ -99,7 +98,7 @@ const slideNext = function () {
   }
 
   updateSliderPos();
-}
+};
 
 heroSliderNextBtn.addEventListener("click", slideNext);
 
@@ -111,7 +110,7 @@ const slidePrev = function () {
   }
 
   updateSliderPos();
-}
+};
 
 heroSliderPrevBtn.addEventListener("click", slidePrev);
 
@@ -125,18 +124,26 @@ const autoSlide = function () {
   autoSlideInterval = setInterval(function () {
     slideNext();
   }, 7000);
-}
+};
 
-addEventOnElements([heroSliderNextBtn, heroSliderPrevBtn], "mouseover", function () {
-  clearInterval(autoSlideInterval);
-});
+addEventOnElements(
+  [heroSliderNextBtn, heroSliderPrevBtn],
+  "mouseover",
+  function () {
+    clearInterval(autoSlideInterval);
+  }
+);
 
-addEventOnElements([heroSliderNextBtn, heroSliderPrevBtn], "mouseout", autoSlide);
+addEventOnElements(
+  [heroSliderNextBtn, heroSliderPrevBtn],
+  "mouseout",
+  autoSlide
+);
 
 window.addEventListener("load", autoSlide);
 
 /**
- * PARALLAX 
+ * PARALLAX
  */
 
 const parallaxItems = document.querySelectorAll("[data-parallax-item]");
@@ -144,21 +151,17 @@ const parallaxItems = document.querySelectorAll("[data-parallax-item]");
 let x, y;
 
 window.addEventListener("mousemove", function (event) {
-
-  x = (event.clientX / window.innerWidth * 10) - 5;
-  y = (event.clientY / window.innerHeight * 10) - 5;
+  x = (event.clientX / window.innerWidth) * 10 - 5;
+  y = (event.clientY / window.innerHeight) * 10 - 5;
 
   //reverse the number eg. 20-> -20, -5 ->5
 
-  x = x - (x * 2);
-  y = y - (y * 2);
+  x = x - x * 2;
+  y = y - y * 2;
 
   for (let i = 0, len = parallaxItems.length; i < len; i++) {
     x = x * Number(parallaxItems[i].dataset.parallaxSpeed);
     y = y * Number(parallaxItems[i].dataset.parallaxSpeed);
     parallaxItems[i].style.transform = `translate3d(${x}px, ${y}px, 0px)`;
   }
-
 });
-
-
